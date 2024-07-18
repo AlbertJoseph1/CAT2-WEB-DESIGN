@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Pay Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    label, input {
+        display: block;
+        margin-bottom: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .result {
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+</style>
+</head>
+<body>
+    <form id="payForm">
+        <label for="employeeName">Employee Name:</label>
+        <input type="text" id="employeeName" required>
+        <label for="hoursWorked">Hours Worked:</label>
+        <input type="number" id="hoursWorked" required>
+        <label for="ratePerHour">Rate Per Hour:</label>
+        <input type="number" id="ratePerHour" required>
+        <button type="submit">Calculate Pay</button>
+    </form>
+
+    <div class="result" id="payResult" style="display: none;">
+        <h2>Payroll Calculation Result</h2>
+        <p><strong>Employee Name:</strong> <span id="resultEmployeeName"></span></p>
+        <p><strong>Basic Pay:</strong> $<span id="resultBasicPay"></span></p>
+        <p><strong>Tax Deduction:</strong> $<span id="resultTax"></span></p>
+        <p><strong>Net Pay:</strong> $<span id="resultNetPay"></span></p>
+    </div>
+
+    <script>
+        document.getElementById('payForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Fetch user input
+            let employeeName = document.getElementById('employeeName').value;
+            let hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+            let ratePerHour = parseFloat(document.getElementById('ratePerHour').value);
+
+            // Calculate basic pay
+            let basicPay = hoursWorked * ratePerHour;
+
+            // Calculate tax based on basic pay
+            let tax = 0;
+            if (basicPay > 50000) {
+                tax = 0.2 * basicPay;
+            } else if (basicPay >= 20000 && basicPay <= 50000) {
+                tax = 0.1 * basicPay;
+            } else {
+                // No tax if basic pay is below 20000
+                tax = 0;
+            }
+
+            // Calculate net pay
+            let netPay = basicPay - tax;
+
+            // Display results
+            document.getElementById('resultEmployeeName').textContent = employeeName;
+            document.getElementById('resultBasicPay').textContent = basicPay.toFixed(2);
+            document.getElementById('resultTax').textContent = tax.toFixed(2);
+            document.getElementById('resultNetPay').textContent = netPay.toFixed(2);
+
+            // Show the result section
+            document.getElementById('payResult').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
